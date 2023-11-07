@@ -58,6 +58,9 @@ namespace DoAnLau_API.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -213,20 +216,6 @@ namespace DoAnLau_API.Migrations
                     b.ToTable("BranchReservationTime");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.City", b =>
-                {
-                    b.Property<string>("city_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("cityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("city_Id");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("DoAnLau_API.Models.CustomerSize", b =>
                 {
                     b.Property<string>("customerSize_Id")
@@ -241,25 +230,6 @@ namespace DoAnLau_API.Migrations
                     b.HasKey("customerSize_Id");
 
                     b.ToTable("CustomerSize");
-                });
-
-            modelBuilder.Entity("DoAnLau_API.Models.District", b =>
-                {
-                    b.Property<string>("district_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("city_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("districtName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("district_Id");
-
-                    b.HasIndex("city_Id");
-
-                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.Menu", b =>
@@ -500,6 +470,39 @@ namespace DoAnLau_API.Migrations
                     b.ToTable("PromotionUsers");
                 });
 
+            modelBuilder.Entity("DoAnLau_API.Models.QuanHuyen", b =>
+                {
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tenQuanHuyen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("tinhThanhPhoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("tinhThanhPhoId");
+
+                    b.ToTable("QuanHuyen");
+                });
+
+            modelBuilder.Entity("DoAnLau_API.Models.QuocGia", b =>
+                {
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tenQuocGia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("QuocGia");
+                });
+
             modelBuilder.Entity("DoAnLau_API.Models.Reservation", b =>
                 {
                     b.Property<string>("reservation_Id")
@@ -567,23 +570,42 @@ namespace DoAnLau_API.Migrations
                     b.ToTable("ReservationUsers");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.Ward", b =>
+            modelBuilder.Entity("DoAnLau_API.Models.TinhThanhPho", b =>
                 {
-                    b.Property<string>("ward_Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
 
-                    b.Property<string>("district_Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("quocGiaId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("wardName")
+                    b.Property<string>("tenTinhThanhPho")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("ward_Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("district_Id");
+                    b.HasIndex("quocGiaId");
 
-                    b.ToTable("Wards");
+                    b.ToTable("TinhThanhPho");
+                });
+
+            modelBuilder.Entity("DoAnLau_API.Models.XaPhuong", b =>
+                {
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quanHuyenId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tenXaPhuong")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("quanHuyenId");
+
+                    b.ToTable("XaPhuong");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -747,15 +769,6 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("reservationTime");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.District", b =>
-                {
-                    b.HasOne("DoAnLau_API.Models.City", "city")
-                        .WithMany("districts")
-                        .HasForeignKey("city_Id");
-
-                    b.Navigation("city");
-                });
-
             modelBuilder.Entity("DoAnLau_API.Models.Menu", b =>
                 {
                     b.HasOne("DoAnLau_API.Models.MenuCategory", "menuCategory")
@@ -856,6 +869,17 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("DoAnLau_API.Models.QuanHuyen", b =>
+                {
+                    b.HasOne("DoAnLau_API.Models.TinhThanhPho", "tinhThanhPho")
+                        .WithMany("quanHuyens")
+                        .HasForeignKey("tinhThanhPhoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tinhThanhPho");
+                });
+
             modelBuilder.Entity("DoAnLau_API.Models.Reservation", b =>
                 {
                     b.HasOne("DoAnLau_API.Models.Branch", "branch")
@@ -900,13 +924,26 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.Ward", b =>
+            modelBuilder.Entity("DoAnLau_API.Models.TinhThanhPho", b =>
                 {
-                    b.HasOne("DoAnLau_API.Models.District", "district")
-                        .WithMany("wards")
-                        .HasForeignKey("district_Id");
+                    b.HasOne("DoAnLau_API.Models.QuocGia", "quocGia")
+                        .WithMany()
+                        .HasForeignKey("quocGiaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("district");
+                    b.Navigation("quocGia");
+                });
+
+            modelBuilder.Entity("DoAnLau_API.Models.XaPhuong", b =>
+                {
+                    b.HasOne("DoAnLau_API.Models.QuanHuyen", "quanHuyen")
+                        .WithMany("xaPhuongs")
+                        .HasForeignKey("quanHuyenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("quanHuyen");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -980,19 +1017,9 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("reservations");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.City", b =>
-                {
-                    b.Navigation("districts");
-                });
-
             modelBuilder.Entity("DoAnLau_API.Models.CustomerSize", b =>
                 {
                     b.Navigation("reservations");
-                });
-
-            modelBuilder.Entity("DoAnLau_API.Models.District", b =>
-                {
-                    b.Navigation("wards");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.Menu", b =>
@@ -1027,6 +1054,11 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("promotionDetailPromotions");
                 });
 
+            modelBuilder.Entity("DoAnLau_API.Models.QuanHuyen", b =>
+                {
+                    b.Navigation("xaPhuongs");
+                });
+
             modelBuilder.Entity("DoAnLau_API.Models.Reservation", b =>
                 {
                     b.Navigation("reservationUsers");
@@ -1037,6 +1069,11 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("branchReservationTimes");
 
                     b.Navigation("reservations");
+                });
+
+            modelBuilder.Entity("DoAnLau_API.Models.TinhThanhPho", b =>
+                {
+                    b.Navigation("quanHuyens");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,7 +14,9 @@ namespace DoAnLau_API.Models
         [Required]
         public bool gender { get; set; }
         [Required]
-        public string comfirmPassword { get; set; } = null!;
+        public string confirmPassword { get; set; } = null!;
+
+        public string Phone { get; set; }
 
     }
 }

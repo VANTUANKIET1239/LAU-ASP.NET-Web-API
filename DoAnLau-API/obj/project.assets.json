@@ -3999,11 +3999,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Desktop\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\LAU\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
       "projectName": "DoAnLau-API",
-      "projectPath": "C:\\Users\\PC\\Desktop\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\LAU\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Desktop\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\LAU\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "F:\\Visual Studio 2022\\Shared\\NuGetPackages"

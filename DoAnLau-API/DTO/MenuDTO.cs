@@ -20,6 +20,8 @@ namespace DoAnLau_API.Interface
 
         public bool state { get; set; }
 
-        
+         public string MenuCategoryId { get; set; }
+
+        public string MenuCategoryName { get; set; }
     }
 }

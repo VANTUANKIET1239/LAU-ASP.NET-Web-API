@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EQaVyN5fxl/sXnVK2veJ7b2CvwtTOdeUxEY02veW7xlGIGh4cN5XiLPhddsTvD1oBQvcjem1b4L8GQRVIpYBkA==",
+  "dgSpecHash": "RJ/N04/mPTkWy64ReVCHbkqheBFX9h78drYwhYaHIH6T60OLhsTNidExX8izeRboRjsxnK3fwKC/9GgfI4sy8w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Desktop\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
+  "projectFilePath": "C:\\Users\\PC\\Desktop\\LAU\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

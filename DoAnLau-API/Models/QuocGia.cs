@@ -3,17 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnLau_API.Models
 {
-    public class Ward
+    public class QuocGia
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-      
-        public string ward_Id { get; set; }
+        public int ID { get; set; }
 
-
-        [Column(TypeName = "nvarchar(20)")]
-        public string wardName { get; set;}
-
-        public District district { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
+        public string tenQuocGia { get; set; }
     }
 }

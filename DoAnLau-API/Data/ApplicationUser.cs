@@ -15,11 +15,11 @@ namespace DoAnLau_API.Data
 
         public int rewardPoints { get; set; } = 0;
 
+        public string? Phone { get; set; }
+
         public ICollection<PromotionUser> promotionUsers { get; set; }
         public ICollection<ReservationUser> reservationUsers { get; set; }
-
         public ICollection<Order> orders { get; set; }
-
         public ICollection<Address> addresses { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DoAnLau_API.Interface;
 using DoAnLau_API.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoAnLau_API.Controller
@@ -13,25 +15,25 @@ namespace DoAnLau_API.Controller
         private readonly IMapper _mapper;
         private readonly IPageResponsitory _pageResponsitory;
 
-        public MenuController(IMenuResponsitory menuResponsitory, IMapper mapper, IPageResponsitory pageResponsitory )
+        public MenuController(IMenuResponsitory menuResponsitory, IMapper mapper, IPageResponsitory pageResponsitory)
         {
             this._menuResponsitory = menuResponsitory;
             this._mapper = mapper;
             this._pageResponsitory = pageResponsitory;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetMenus([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 4)
+        [HttpGet,Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetMenus()
         {
-            var menus = await _menuResponsitory.GetMenus(); 
+            var menus = await _menuResponsitory.GetMenus();
             if (menus == null)
-            {   
+            {
                 return NotFound();
             }
             return Ok(_mapper.Map<List<MenuDTO>>(menus));
 
         }
         [HttpGet("{menuId}")]
-        public async Task<IActionResult> GetMenu(string menuId)
+        public async Task<IActionResult> GetMenu([FromRoute]string menuId)
         {
             if (!await _menuResponsitory.IsMenuExists(menuId))
             {
@@ -81,7 +83,7 @@ namespace DoAnLau_API.Controller
             return Ok(new { success = true });
         }
         [HttpPost("RemoveMenu")]
-        public async Task<IActionResult> RemoveMenu([FromBody] MenuDTO menu)
+        public async Task<IActionResult> RemoveMenu([FromBody]MenuDTO menu)
         {
             if (menu == null) return NotFound();
             if (!await _menuResponsitory.RemoveMenu(menu.menu_Id))

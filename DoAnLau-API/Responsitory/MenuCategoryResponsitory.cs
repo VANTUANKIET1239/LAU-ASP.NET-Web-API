@@ -25,6 +25,7 @@ namespace DoAnLau_API.Responsitory
 
         public async Task<ICollection<MenuCategory>> GetMenuCategories()
         {
+            
             return await _dataContext.MenuCategories.Where(x => x.state).ToListAsync();
         }
 

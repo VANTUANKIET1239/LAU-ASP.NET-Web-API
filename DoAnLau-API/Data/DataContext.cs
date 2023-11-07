@@ -15,11 +15,7 @@ namespace DoAnLau_API.Data
         public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Branch> Branches { get; set; }
-        public DbSet<City> Cities { get; set; }
-
-
-        public DbSet<District> Districts { get; set; }
-
+    
         public DbSet<Menu> Menus { get; set; }
 
         public DbSet<MenuCategory> MenuCategories { get; set; }
@@ -44,10 +40,18 @@ namespace DoAnLau_API.Data
 
         public DbSet<News> News { get; set; }
 
-        public DbSet<Ward> Wards { get; set; }
+        public DbSet<XaPhuong> XaPhuong { get; set; }
+
+        public DbSet<QuanHuyen> QuanHuyen { get; set; }
+        public DbSet<QuocGia> QuocGia { get; set; }
+        public DbSet<TinhThanhPho> TinhThanhPho { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
+
+
+
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Order_Detail>()

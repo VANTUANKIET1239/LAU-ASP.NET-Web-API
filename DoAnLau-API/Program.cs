@@ -4,7 +4,9 @@ using DoAnLau_API.Responsitory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,30 +31,45 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options =>
    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -._@+!*'(),"
     )
-    .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();    
+    .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
-// khởi tạo service Authentication
-builder.Services.AddAuthentication(options => {
+builder.Services.AddDbContext<DataContext>(options =>
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+builder.Services.AddAuthentication(options =>
+{
     // khi yêu cầu xác thực thành công 
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     // khi có yêu cầu xác thực 
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+/*
     // khi có những yêu cầu không đòi hỏi xác thực 
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => {
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;*/
+}).AddJwtBearer(options =>
+{
+  /*  options.SaveToken = true;
+    options.RequireHttpsMetadata = false;*/
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
         ValidAudience = builder.Configuration["JWT:ValidAudience"],
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
 });
 
-builder.Services.AddCors(options =>
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier;
+});
+builder.Services.AddHttpContextAccessor();
+// cấp quyền cho API 
+builder.Services.AddCors(options => 
 {
     options.AddPolicy("AllowAngularOrigins",
     builder =>
@@ -65,12 +82,10 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<DataContext>(options =>
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
 
 var app = builder.Build();
+//app.UseCors("AllowAngularOrigins");
 app.UseCors("AllowAngularOrigins");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -82,6 +97,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

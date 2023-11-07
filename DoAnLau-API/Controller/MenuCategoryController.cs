@@ -77,19 +77,19 @@ namespace DoAnLau_API.Controller
             }
             return Ok(new { success = true });
         }
-        [HttpPost("RemoveMenuCategory")]
-        public async Task<IActionResult> RemoveMenuCategory(MenuCategoryDTO menuCategory)
+        [HttpGet("RemoveMenuCategory")]
+        public async Task<IActionResult> RemoveMenuCategory([FromQuery]string menuCategoryId)
         {
-            if (menuCategory.menuCategory_Id == null || menuCategory == null)
+            if (menuCategoryId == null)
             {
                 return BadRequest();
             }
+            var menuCate = await _menuCategoryResponsitory.GetMenuCategory(menuCategoryId);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var menuCategoryMap = _mapper.Map<MenuCategory>(menuCategory);
-            if (!await _menuCategoryResponsitory.RemoveMenuCategory(menuCategoryMap))
+            if (!await _menuCategoryResponsitory.RemoveMenuCategory(menuCate))
             {
                 return StatusCode(500, ModelState);
             }
