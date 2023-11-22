@@ -7,11 +7,15 @@ namespace DoAnLau_API.Interface
 {
     public class DistrictDTO
     {
+
+       
+        public int ID { get; set; }
+
         
-        public string district_Id { get; set; }
+        public string tenQuanHuyen { get; set; }
 
       
-        public string districtName { get; set; }
+        public int tinhThanhPhoId { get; set; }
 
     }
 }

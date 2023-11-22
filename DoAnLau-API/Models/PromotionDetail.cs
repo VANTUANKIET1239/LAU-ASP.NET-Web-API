@@ -14,6 +14,6 @@ namespace DoAnLau_API.Models
         [Column(TypeName = "nvarchar(200)")]
         public string content { get; set; }
 
-        public ICollection<PromotionDetailPromotion> promotionDetailPromotions { get; set; }
+        public Promotion promotion { get; set; }
     }
 }

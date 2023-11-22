@@ -13,6 +13,8 @@ namespace DoAnLau_API.Interface
         public Task<string> SignIn(SignInModel model);
 
         public  Task<ApplicationUser> GetCurrentUser();
-        
+
+        public Task<bool> EditUser(UserDTO user);
+
     }
 }

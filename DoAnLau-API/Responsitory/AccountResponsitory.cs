@@ -1,12 +1,14 @@
 ﻿using DoAnLau_API.Data;
 using DoAnLau_API.FF;
 using DoAnLau_API.Interface;
+using DoAnLau_API.Migrations;
 using DoAnLau_API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DoAnLau_API.Responsitory
 {
@@ -33,6 +35,17 @@ namespace DoAnLau_API.Responsitory
             this._dataContext = dataContext;
         }
 
+        public async Task<bool> EditUser(UserDTO user)
+        {
+            var currentUser = await _userManager.FindByIdAsync(user.userId);
+            currentUser.gender = user.gender;
+            currentUser.name = user.name;
+            currentUser.userImage = user.userImage;
+            currentUser.birthdate = user.birthDate;
+            var result = await _userManager.UpdateAsync(currentUser);
+            return result.Succeeded;
+        }
+       
         public async Task<ApplicationUser> GetCurrentUser()
         {
             string email = _httpContextAccessor.HttpContext?.User.FindFirst(x => x.Type == ClaimTypes.Email)?.Value;
@@ -79,6 +92,7 @@ namespace DoAnLau_API.Responsitory
 
         public async Task<IdentityResult> SignUp(SignUpModel model)
         {
+            
             var user = new ApplicationUser
             {
                 name = model.name,
@@ -91,13 +105,9 @@ namespace DoAnLau_API.Responsitory
                 Phone = model.Phone
             };
             var result = await _userManager.CreateAsync(user, model.password);
-            /*Console.WriteLine(result);*/
             return result;
         }
-      /*  public async Task<ApplicationUser> GetUser()
-        {
-            _userManager.get
-        }*/
+     
 
     }
 }

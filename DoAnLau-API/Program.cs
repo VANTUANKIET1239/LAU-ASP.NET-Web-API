@@ -25,6 +25,11 @@ builder.Services.AddScoped<IAccountResponsitory, AccountResponsitory>();
 builder.Services.AddScoped<IMenuResponsitory, MenuResponsitory>();
 builder.Services.AddScoped<IMenuCategoryResponsitory, MenuCategoryResponsitory>();
 builder.Services.AddScoped<IPageResponsitory, PageResponsitory>();
+builder.Services.AddScoped<IAddresssRepository, AddressRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
+builder.Services.AddScoped<IWardRepository, WardRepository>();
+builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 
 // khởi tạo service Indentity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(

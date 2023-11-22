@@ -14,8 +14,28 @@ namespace DoAnLau_API.Helper
                  .ForMember(dest => dest.MenuCategoryId, opt => opt.MapFrom(src => src.menuCategory.menuCategory_Id))
                   .ForMember(dest => dest.MenuCategoryName, opt => opt.MapFrom(src => src.menuCategory.categoryName))
                  ;
-            CreateMap<MenuDTO, Menu>();
-            CreateMap<ApplicationUser, UserDTO>();
+            CreateMap<XaPhuong, WardDTO>();
+            CreateMap<WardDTO, XaPhuong>();
+            CreateMap<QuanHuyen, DistrictDTO>();
+            CreateMap<DistrictDTO, QuanHuyen>();
+
+            CreateMap<TinhThanhPho, CityDTO>();
+            CreateMap<CityDTO, TinhThanhPho>();
+
+            CreateMap<Address, AddressDTO>();
+            CreateMap<AddressDTO, Address>();
+
+
+            CreateMap<Promotion, PromotionDTO>();
+            CreateMap<PromotionDTO, Promotion>() 
+                .ForMember(dest => dest.promotionDetails, opt => opt.Ignore()); 
+
+            CreateMap<PromotionDetail, PromotionDetailDTO>();
+            CreateMap<PromotionDetailDTO, PromotionDetail>();
+
+
+            CreateMap<ApplicationUser, UserDTO>()
+                .ForMember(dest => dest.userId, opt => opt.MapFrom(src => src.Id));
             CreateMap<MenuCategory, MenuCategoryDTO>();
             CreateMap<MenuCategoryDTO, MenuCategory>();
         }

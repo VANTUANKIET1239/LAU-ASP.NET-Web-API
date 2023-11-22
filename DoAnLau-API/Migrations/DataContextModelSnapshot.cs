@@ -380,14 +380,13 @@ namespace DoAnLau_API.Migrations
 
                     b.Property<string>("PromotionImage")
                         .IsRequired()
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("expirationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("promotionDetails")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("promotionName")
                         .IsRequired()
@@ -395,10 +394,6 @@ namespace DoAnLau_API.Migrations
 
                     b.Property<bool>("state")
                         .HasColumnType("bit");
-
-                    b.Property<string>("validityPeriod")
-                        .IsRequired()
-                        .HasColumnType("varchar(80)");
 
                     b.HasKey("promotion_Id");
 
@@ -432,24 +427,15 @@ namespace DoAnLau_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("promotion_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("promotionDetail_Id");
 
+                    b.HasIndex("promotion_Id");
+
                     b.ToTable("PromotionDetails");
-                });
-
-            modelBuilder.Entity("DoAnLau_API.Models.PromotionDetailPromotion", b =>
-                {
-                    b.Property<string>("promotion_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("promotionDetail_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("promotion_Id", "promotionDetail_Id");
-
-                    b.HasIndex("promotionDetail_Id");
-
-                    b.ToTable("PromotionDetailPromotions");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.PromotionUser", b =>
@@ -831,23 +817,15 @@ namespace DoAnLau_API.Migrations
                     b.Navigation("promotion");
                 });
 
-            modelBuilder.Entity("DoAnLau_API.Models.PromotionDetailPromotion", b =>
+            modelBuilder.Entity("DoAnLau_API.Models.PromotionDetail", b =>
                 {
                     b.HasOne("DoAnLau_API.Models.Promotion", "promotion")
-                        .WithMany("promotionDetailPromotions")
-                        .HasForeignKey("promotionDetail_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DoAnLau_API.Models.PromotionDetail", "promotionDetail")
-                        .WithMany("promotionDetailPromotions")
+                        .WithMany("promotionDetails")
                         .HasForeignKey("promotion_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("promotion");
-
-                    b.Navigation("promotionDetail");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.PromotionUser", b =>
@@ -1044,14 +1022,9 @@ namespace DoAnLau_API.Migrations
 
                     b.Navigation("promotionBranches");
 
-                    b.Navigation("promotionDetailPromotions");
+                    b.Navigation("promotionDetails");
 
                     b.Navigation("promotionUsers");
-                });
-
-            modelBuilder.Entity("DoAnLau_API.Models.PromotionDetail", b =>
-                {
-                    b.Navigation("promotionDetailPromotions");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.QuanHuyen", b =>

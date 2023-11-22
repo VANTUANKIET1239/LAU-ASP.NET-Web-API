@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnLau_API.Models
 {
-    public class PromotionDetailPromotion
+  /*  public class PromotionDetailPromotion
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -19,5 +19,5 @@ namespace DoAnLau_API.Models
         public Promotion promotion { get; set; }
 
         public PromotionDetail promotionDetail { get; set; }
-    }
+    }*/
 }

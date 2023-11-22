@@ -11,7 +11,7 @@ namespace DoAnLau_API.Interface
         public string promotion_Id { get; set; }
 
 
-        public string PromotionImage { get; set; }
+        public byte[] PromotionImage { get; set; }
 
       
         public string promotionName { get; set; }
@@ -21,9 +21,10 @@ namespace DoAnLau_API.Interface
 
         public DateTime expirationDate { get; set; }
 
-       
-        public string promotionDetails { get; set; }
+        public DateTime createDate { get; set; }
 
+
+        public List<PromotionDetailDTO> promotionDetails { get; set; }
        
         public bool state { get; set; }
 

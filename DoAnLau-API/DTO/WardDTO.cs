@@ -7,10 +7,12 @@ namespace DoAnLau_API.Interface
 {
     public class WardDTO
     {
-        
-        public string ward_Id { get; set; }
- 
-        public string wardName { get; set; }
+
+        public int ID { get; set; }
+
+        public string tenXaPhuong { get; set; }
+
+        public int quanHuyenId { get; set; }
 
     }
 }

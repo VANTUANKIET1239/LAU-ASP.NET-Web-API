@@ -36,7 +36,7 @@ namespace DoAnLau_API.Data
 
         public DbSet<PromotionDetail> PromotionDetails { get; set; }
 
-        public DbSet<PromotionDetailPromotion> PromotionDetailPromotions { get; set; }
+       // public DbSet<PromotionDetailPromotion> PromotionDetailPromotions { get; set; }
 
         public DbSet<News> News { get; set; }
 
@@ -63,7 +63,7 @@ namespace DoAnLau_API.Data
             modelBuilder.Entity<Order_Detail>()
           .HasKey(m => new { m.order_Id, m.orderDetail_Id });
 
-            modelBuilder.Entity<PromotionDetailPromotion>()
+/*            modelBuilder.Entity<PromotionDetailPromotion>()
         .HasKey(m => new { m.promotion_Id, m.promotionDetail_Id });
 
 
@@ -75,7 +75,7 @@ namespace DoAnLau_API.Data
             modelBuilder.Entity<PromotionDetailPromotion>()
                     .HasOne(pc => pc.promotionDetail)
                     .WithMany(c => c.promotionDetailPromotions)
-                    .HasForeignKey(c => c.promotion_Id);
+                    .HasForeignKey(c => c.promotion_Id);*/
 
 
 

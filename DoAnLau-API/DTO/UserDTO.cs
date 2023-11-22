@@ -9,7 +9,7 @@ namespace DoAnLau_API.Interface
     {
         public string userId { get; set; }
 
-        public string userImage { get; set; }
+        public byte[]? userImage { get; set; }
       
         public string name { get; set; }
 
@@ -23,13 +23,13 @@ namespace DoAnLau_API.Interface
 
         public int rewardPoints { get; set; }
 
+       // public IFormFile uploadImage { get; set; }
 
-      
-       /* public bool role { get; set; }
+        /* public bool role { get; set; }
 
-       
-        public bool state { get; set; }*/
 
-   
+         public bool state { get; set; }*/
+
+
     }
 }
