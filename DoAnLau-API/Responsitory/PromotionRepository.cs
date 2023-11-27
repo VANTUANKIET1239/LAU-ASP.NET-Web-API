@@ -19,8 +19,8 @@ namespace DoAnLau_API.Responsitory
         }
         public async Task<bool> CreatePromotionCategory(Promotion promotion, List<PromotionDetail> promotionDetails)
         {
-            var getPromotionCount = _dataContext.Promotions.Count();
-            string newPromotionId = "PROM" + (getPromotionCount + 1).ToString("00000000000");
+            var getPromotionCount = await _sYS_INDEX.GetIndex_ByName("PROMOTION");
+            string newPromotionId = getPromotionCount.prefix + (++getPromotionCount.currentIndex).ToString("00000000000");
             promotion.promotion_Id = newPromotionId;
             await _dataContext.Promotions.AddAsync(promotion);
             if( await _dataContext.SaveChangesAsync() > 0)
@@ -30,7 +30,8 @@ namespace DoAnLau_API.Responsitory
                     return true;
                 }
             }
-            return false;
+            await _sYS_INDEX.SysIndex_Upd(getPromotionCount.currentIndex, "PROMOTION");
+            return _dataContext.SaveChanges() > 0 ? true : false;
         }
 
         public async Task<Promotion> GetPromotion(string promotionId)
@@ -40,7 +41,7 @@ namespace DoAnLau_API.Responsitory
 
         public async Task<ICollection<Promotion>> GetPromotions()
         {
-            return await _dataContext.Promotions.Include(x => x.promotionDetails).ToListAsync();
+            return await _dataContext.Promotions.Where(x => x.state).Include(x => x.promotionDetails).ToListAsync();
         }
 
         public async Task<ICollection<Promotion>> GetPromotions_ByUserId(string UserId)
@@ -60,19 +61,19 @@ namespace DoAnLau_API.Responsitory
         {
             var getPromotionCount = await _sYS_INDEX.GetIndex_ByName("PROMOTION_DETAIL");
             var promotion = await _dataContext.Promotions.Where(x => x.promotion_Id == newPromotionId).FirstOrDefaultAsync();
-            int i = 1;
+            
             promotionDetail.ForEach(async x =>
             {
                 x.promotion = promotion;
-                string newPromotionId = getPromotionCount.prefix + (getPromotionCount.currentIndex + i).ToString("00000000000");
+                ++getPromotionCount.currentIndex;
+                string newPromotionId = getPromotionCount.prefix + (getPromotionCount.currentIndex).ToString("00000000000");
                 x.promotionDetail_Id = newPromotionId;
-                ++i;
                 await _dataContext.PromotionDetails.AddAsync(x);
-                _dataContext.SaveChanges();
+                _dataContext.SaveChanges(); 
                 
             });
-                
-            return true;
+            await _sYS_INDEX.SysIndex_Upd(getPromotionCount.currentIndex, "PROMOTION_DETAIL");
+            return _dataContext.SaveChanges() > 0 ? true : false;
         }
 
         public async Task<bool> PromotionContent_Upd(List<PromotionDetail> promotionDetail, string promotionId)

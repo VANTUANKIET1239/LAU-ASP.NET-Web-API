@@ -17,5 +17,18 @@ namespace DoAnLau_API.Responsitory
         {
             return await _dataContext.SYS_INDices.Where(x => x.nameIndex == name).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> SysIndex_Upd(int currentIndex,string nameIndex)
+        {
+            var indexObj =  await _dataContext.SYS_INDices.Where(x => x.nameIndex == nameIndex).FirstOrDefaultAsync();
+            if (indexObj != null)
+            {
+                indexObj.currentIndex = currentIndex;
+                _dataContext.SYS_INDices.Update(indexObj);
+                return _dataContext.SaveChanges() > 0 ? true : false;
+            }
+            return false;
+            
+        }
     }
 }

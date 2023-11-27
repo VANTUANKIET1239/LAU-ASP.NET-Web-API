@@ -98,7 +98,7 @@ namespace DoAnLau_API.Responsitory
                 name = model.name,
                 Email = model.email,
                 UserName = model.email,
-                userImage = OtherFunctions.PathImage2Byte("C:\\Users\\PC\\Desktop\\DoAn-Lau\\DoAnLau-API\\DoAnLau-API\\DoAnLau-API\\Image\\default_user.jpg"),
+                userImage = OtherFunctions.PathImage2Byte("C:\\Users\\hungs\\Desktop\\LAU\\LAU-CORE\\DoAnLau-API\\Image\\default_user.jpg"),
                 birthdate = model.birthdate,
                 gender = model.gender,
                 rewardPoints = 0,
