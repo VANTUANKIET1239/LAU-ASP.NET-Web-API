@@ -94,7 +94,7 @@ namespace DoAnLau_API.Controller
                 };
                 return result;
             }
-            else if (CheckForSpecialCharacters(model.password))
+            else if (!CheckForSpecialCharacters(model.password))
             {
                 var result = new Dictionary<bool, string>
                 {
@@ -135,10 +135,10 @@ namespace DoAnLau_API.Controller
             {
                 if (c >= 'a' && c <= 'z')
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
         private bool CheckForSpecialCharacters(string input)
         {
