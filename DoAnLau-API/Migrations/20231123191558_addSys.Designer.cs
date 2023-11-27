@@ -4,6 +4,7 @@ using DoAnLau_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnLau_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231123191558_addSys")]
+    partial class addSys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -561,11 +564,9 @@ namespace DoAnLau_API.Migrations
 
             modelBuilder.Entity("DoAnLau_API.Models.SYS_INDEX", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("currentIndex")
                         .HasColumnType("int");

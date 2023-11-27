@@ -30,6 +30,7 @@ builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<IWardRepository, WardRepository>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
+builder.Services.AddScoped<ISYS_INDEX, SysIndexRepository>();
 
 // khởi tạo service Indentity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(

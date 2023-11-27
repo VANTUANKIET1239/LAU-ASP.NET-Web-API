@@ -17,8 +17,8 @@ namespace DoAnLau_API.Models
         public string promotionName { get; set; }
 
 
-      /*  [Column(TypeName = "varchar(80)")]
-        public string validityPeriod { get; set; }*/
+        [Column(TypeName = "nvarchar(200)")]
+        public string? imagePath { get; set; }
 
         public DateTime createDate { get; set; }
 

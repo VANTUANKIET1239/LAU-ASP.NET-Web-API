@@ -4,6 +4,7 @@ using DoAnLau_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnLau_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231123191940_ty3")]
+    partial class ty3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -557,30 +560,6 @@ namespace DoAnLau_API.Migrations
                     b.HasIndex("user_Id");
 
                     b.ToTable("ReservationUsers");
-                });
-
-            modelBuilder.Entity("DoAnLau_API.Models.SYS_INDEX", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("currentIndex")
-                        .HasColumnType("int");
-
-                    b.Property<string>("nameIndex")
-                        .IsRequired()
-                        .HasColumnType(" nvarchar(100)");
-
-                    b.Property<string>("prefix")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("SYS_INDices");
                 });
 
             modelBuilder.Entity("DoAnLau_API.Models.TinhThanhPho", b =>

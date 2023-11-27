@@ -124,8 +124,9 @@ namespace DoAnLau_API.Controller
                     promotionObject.PromotionImage = memoryStream.ToArray();
                 }
             }
+            var promotionDTMap = _mapper.Map<List<PromotionDetail>>(promotionObject.promotionDetails);
             var promotionMap = _mapper.Map<Promotion>(promotionObject);
-            if (!await _promotionRepository.UpdatePromotionCategory(promotionMap))
+            if (!await _promotionRepository.UpdatePromotionCategory(promotionMap, promotionDTMap))
             {
                 return Ok(new { success = false, message = "Chỉnh sửa ưu đãi thất bại" });
             };

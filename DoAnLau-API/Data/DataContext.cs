@@ -36,7 +36,9 @@ namespace DoAnLau_API.Data
 
         public DbSet<PromotionDetail> PromotionDetails { get; set; }
 
-       // public DbSet<PromotionDetailPromotion> PromotionDetailPromotions { get; set; }
+        public DbSet<SYS_INDEX>  SYS_INDices { get; set; }
+
+        // public DbSet<PromotionDetailPromotion> PromotionDetailPromotions { get; set; }
 
         public DbSet<News> News { get; set; }
 

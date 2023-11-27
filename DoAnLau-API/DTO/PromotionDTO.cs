@@ -23,6 +23,8 @@ namespace DoAnLau_API.Interface
 
         public DateTime createDate { get; set; }
 
+        public string imagePath { get; set; }
+
 
         public List<PromotionDetailDTO> promotionDetails { get; set; }
        

@@ -1,4 +1,5 @@
 ﻿using DoAnLau_API.Data;
+using DoAnLau_API.FF;
 using DoAnLau_API.Interface;
 using DoAnLau_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,12 @@ namespace DoAnLau_API.Responsitory
     public class PromotionRepository : IPromotionRepository
     {
         private readonly DataContext _dataContext;
+        private readonly ISYS_INDEX _sYS_INDEX;
 
-        public PromotionRepository(DataContext dataContext)
+        public PromotionRepository(DataContext dataContext, ISYS_INDEX sYS_INDEX)
         {
             this._dataContext = dataContext;
+            this._sYS_INDEX = sYS_INDEX;
         }
         public async Task<bool> CreatePromotionCategory(Promotion promotion, List<PromotionDetail> promotionDetails)
         {
@@ -32,7 +35,7 @@ namespace DoAnLau_API.Responsitory
 
         public async Task<Promotion> GetPromotion(string promotionId)
         {
-            return await _dataContext.Promotions.Where(x => x.promotion_Id == promotionId && x.state).FirstOrDefaultAsync();
+            return await _dataContext.Promotions.Where(x => x.promotion_Id == promotionId && x.state).Include(x => x.promotionDetails).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<Promotion>> GetPromotions()
@@ -55,13 +58,13 @@ namespace DoAnLau_API.Responsitory
 
         public async Task<bool> PromotionContent_Add(List<PromotionDetail> promotionDetail,string newPromotionId)
         {
-            var getPromotionCount = _dataContext.PromotionDetails.Count();
+            var getPromotionCount = await _sYS_INDEX.GetIndex_ByName("PROMOTION_DETAIL");
             var promotion = await _dataContext.Promotions.Where(x => x.promotion_Id == newPromotionId).FirstOrDefaultAsync();
             int i = 1;
             promotionDetail.ForEach(async x =>
             {
                 x.promotion = promotion;
-                string newPromotionId = "PROMDT" + (getPromotionCount + i).ToString("00000000000");
+                string newPromotionId = getPromotionCount.prefix + (getPromotionCount.currentIndex + i).ToString("00000000000");
                 x.promotionDetail_Id = newPromotionId;
                 ++i;
                 await _dataContext.PromotionDetails.AddAsync(x);
@@ -72,21 +75,30 @@ namespace DoAnLau_API.Responsitory
             return true;
         }
 
-        public async Task<bool> PromotionContent_Upd(List<PromotionDetail> promotionDetail)
+        public async Task<bool> PromotionContent_Upd(List<PromotionDetail> promotionDetail, string promotionId)
         {
-            /*promotionDetail.ForEach(async x =>
+            List<PromotionDetail> allPromotion = await _dataContext.PromotionDetails.Include(x => x.promotion).Where(x => x.promotion.promotion_Id == promotionId).ToListAsync();
+            var RemovePromotion = allPromotion.Except(promotionDetail, new PromotionDetailComparer());
+            if (RemovePromotion.Count() > 0)
             {
-                var promotionDetailItem = _dataContext.PromotionDetails.Where(x => x.promotionDetail_Id == x.promotionDetail_Id).FirstOrDefault();
+                _dataContext.PromotionDetails.RemoveRange(RemovePromotion);
+                await _dataContext.SaveChangesAsync();
+            }
+            foreach (var detail in promotionDetail)
+            {
+                var promotionDetailItem = await _dataContext.PromotionDetails
+                    .Where(p => p.promotionDetail_Id == detail.promotionDetail_Id)
+                    .FirstOrDefaultAsync();
+
                 if (promotionDetailItem != null)
                 {
-                    promotionDetailItem.content = x.content;
+                    promotionDetailItem.content = detail.content;
                     _dataContext.PromotionDetails.Update(promotionDetailItem);
-                    await _dataContext.SaveChangesAsync() ;
+                    await _dataContext.SaveChangesAsync();
                 }
-            });*/
+            }
 
-            _dataContext.UpdateRange(promotionDetail);
-            return await _dataContext.SaveChangesAsync() > 0 ? true : false;
+            return true;
         }
 
         public async Task<bool> RemovePromotionCategory(Promotion promotion)
@@ -95,6 +107,7 @@ namespace DoAnLau_API.Responsitory
             _dataContext.Update(promotion);
             if (await _dataContext.SaveChangesAsync() > 0)
             {
+                //var promotionDetail = await _dataContext.PromotionDetails.Include(x => x.promotion).Where(x => x.promotion.promotion_Id == promotion.promotion_Id).ToListAsync();
                 var promotionDetail = promotion.promotionDetails.ToList();
                 _dataContext.PromotionDetails.RemoveRange(promotionDetail);
                 return await _dataContext.SaveChangesAsync() > 0 ? true : false;
@@ -102,13 +115,13 @@ namespace DoAnLau_API.Responsitory
             return false;
         }
 
-        public async Task<bool> UpdatePromotionCategory(Promotion promotion)
+        public async Task<bool> UpdatePromotionCategory(Promotion promotion, List<PromotionDetail> promotionDetails)
         {
             _dataContext.Update(promotion);
             if (await _dataContext.SaveChangesAsync() > 0)
             {
-                var promotionDetail = promotion.promotionDetails.ToList();
-                if (await PromotionContent_Upd(promotionDetail))
+                var promotionDetail = promotionDetails;
+                if (await PromotionContent_Upd(promotionDetail,promotion.promotion_Id))
                 {
                     return true;
                 }
