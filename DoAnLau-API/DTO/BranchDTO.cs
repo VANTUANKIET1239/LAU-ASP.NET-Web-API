@@ -14,12 +14,18 @@ namespace DoAnLau_API.Interface
         
         public string addressDetail { get; set; }
        
-        public string ward { get; set; }
+        public int ward { get; set; }
         
-        public string district { get; set; }
+        public int district { get; set; }
        
-        public string city { get; set; }
-      
+        public int city { get; set; }
+
+        public string? wardName { get; set; }
+
+        public string? districtName { get; set; }
+
+        public string? cityName { get; set; }
+
         public string phone { get; set; }
        
         public string email { get; set; }

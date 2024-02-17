@@ -10,8 +10,22 @@ namespace DoAnLau_API.Interface
        
         public string reservation_Id { get; set; }
 
-        public DateTime ReservationDate { get; set; }
-             
+        public DateTime reservationDate { get; set; }
+
+        public string customerSizeId { get; set; }
+
+        public string branchId { get; set; }
+
+        public string reservationTimeId { get; set; }
+
+        public int customerSize { get; set; }
+
+        public string branchName { get; set; }
+
+        public string branchAddress { get; set; }
+
+        public string time { get; set; }
+
         public bool state { get; set; }
 
        

@@ -1,4 +1,6 @@
-﻿using DoAnLau_API.Models;
+﻿using DoAnLau_API.Data;
+using DoAnLau_API.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DoAnLau_API.Interface
 {
@@ -23,7 +25,13 @@ namespace DoAnLau_API.Interface
 
         public Task<bool> PromotionContent_Upd(List<PromotionDetail> promotionDetail,string promotionId);
 
-       // public Task<bool> PromotionContent_Del(List<PromotionDetail> promotionDetail);
+        public Task<bool> Promotion_AddToBranch(List<string> listBranchId, string promotionId);
+
+        public Task<bool> Promotion_Redeem(string promotionId);
+
+        public  Task<bool> CheckUserPoint(string promotionId);
+
+        // public Task<bool> PromotionContent_Del(List<PromotionDetail> promotionDetail);
 
 
     }

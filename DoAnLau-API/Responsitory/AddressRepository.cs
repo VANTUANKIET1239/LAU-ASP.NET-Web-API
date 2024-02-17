@@ -32,7 +32,7 @@ namespace DoAnLau_API.Responsitory
         }
 
         public async Task<bool> Address_Ins(Address address)
-        {
+            {
             var getMenuCategoriesCount = _dataContext.Addresses.Count();
             string email = _httpContextAccessor.HttpContext?.User.FindFirst(x => x.Type == ClaimTypes.Email)?.Value;
             var user = await _userManager.FindByEmailAsync(email);

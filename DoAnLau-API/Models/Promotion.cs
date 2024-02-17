@@ -24,13 +24,16 @@ namespace DoAnLau_API.Models
 
         public DateTime expirationDate { get; set; }
 
-
+        public int? discountValue { get; set; }
 /*        [Column(TypeName = "nvarchar(500)")]
         public string promotionDetails { get; set; }*/
 
 
         [Column(TypeName = "bit")]
         public bool state { get; set; }
+
+        [NotMapped]
+        public int? redeemCount { get; set; }
 
         public  ICollection<PromotionBranch> promotionBranches { get; set; }
         public ICollection<PromotionUser> promotionUsers { get; set; }

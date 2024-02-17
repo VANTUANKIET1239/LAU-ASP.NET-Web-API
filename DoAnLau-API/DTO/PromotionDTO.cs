@@ -25,7 +25,8 @@ namespace DoAnLau_API.Interface
 
         public string imagePath { get; set; }
 
-
+        public int? redeemCount { get; set; }
+        public int? discountValue { get; set; }
         public List<PromotionDetailDTO> promotionDetails { get; set; }
        
         public bool state { get; set; }

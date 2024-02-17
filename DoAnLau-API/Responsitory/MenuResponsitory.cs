@@ -42,8 +42,7 @@ namespace DoAnLau_API.Responsitory
         public async Task<Menu> GetMenu(string menuId)
         {
             var menu = await _dataContext.Menus.Where(x => x.menu_Id == menuId).Include(x => x.menuCategory).FirstOrDefaultAsync();
-            return menu;
-            
+            return menu;         
         }
 
         public async Task<ICollection<Menu>> GetMenus()
@@ -70,6 +69,17 @@ namespace DoAnLau_API.Responsitory
              menuRemove.state = false;
             _dataContext.Update(menuRemove);
             return await _dataContext.SaveChangesAsync() > 0 ? true : false;
+        }
+        public async Task<ICollection<Menu>> Menu_GetHotDealItems()
+        {
+            var menus = await _dataContext.Menus.Where(x => x.state && x.hotDeal == true).Include(x => x.menuCategory).ToListAsync();
+            return menus;
+        }
+
+        public async Task<ICollection<Menu>> Menu_GetBestSellerItems()
+        {
+            var menus = await _dataContext.Menus.Where(x => x.state && x.bestSaller == true).Include(x => x.menuCategory).ToListAsync();
+            return menus;
         }
     }
 }

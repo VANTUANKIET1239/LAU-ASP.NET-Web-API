@@ -12,12 +12,13 @@ namespace DoAnLau_API.Models
         public string branchName { get; set; }
         [Column(TypeName = "nvarchar(150)")]
         public string addressDetail { get; set; }
-        [Column(TypeName = " nvarchar(20)")]
-        public string ward { get; set; }
-        [Column(TypeName = " nvarchar(20)")]
-        public string district { get; set; }
-        [Column(TypeName = "nvarchar(30)")]
-        public string city { get; set; }
+       
+        public int ward { get; set; }
+       
+        public int district { get; set; }
+      
+        public int city { get; set; }
+
         [Column(TypeName = "varchar(15)")]
         public string phone { get; set; }
         [Column(TypeName = "varchar(100)")]

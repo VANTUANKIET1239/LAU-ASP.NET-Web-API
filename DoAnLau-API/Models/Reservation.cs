@@ -10,7 +10,7 @@ namespace DoAnLau_API.Models
        
         public string reservation_Id { get; set; }
 
-        public DateTime ReservationDate { get; set; }
+        public DateTime reservationDate { get; set; }
 /*
         [Column(TypeName = "time")]
         public TimeSpan reservationTime { get; set; }*/

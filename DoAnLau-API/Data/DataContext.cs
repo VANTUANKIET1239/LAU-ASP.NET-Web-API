@@ -38,6 +38,10 @@ namespace DoAnLau_API.Data
 
         public DbSet<SYS_INDEX>  SYS_INDices { get; set; }
 
+        public DbSet<ReservationTime> ReservationTimes  { get; set; }
+
+        public DbSet<CustomerSize>  CustomerSizes { get; set; }
+
         // public DbSet<PromotionDetailPromotion> PromotionDetailPromotions { get; set; }
 
         public DbSet<News> News { get; set; }
@@ -102,12 +106,12 @@ namespace DoAnLau_API.Data
             modelBuilder.Entity<PromotionBranch>()
                 .HasOne(pc => pc.promotion)
                 .WithMany(c => c.promotionBranches)
-                .HasForeignKey(c => c.branch_Id);
+                .HasForeignKey(c => c.promotion_Id);
 
             modelBuilder.Entity<PromotionBranch>()
                     .HasOne(pc => pc.branch)
                     .WithMany(c => c.promotionBranches)
-                    .HasForeignKey(c => c.promotion_Id);
+                    .HasForeignKey(c => c.branch_Id);
 
 
 
@@ -117,12 +121,12 @@ namespace DoAnLau_API.Data
             modelBuilder.Entity<PromotionUser>()
                 .HasOne(pc => pc.user)
                 .WithMany(c => c.promotionUsers)
-                .HasForeignKey(c => c.promotion_Id);
+                .HasForeignKey(c => c.user_Id);
 
             modelBuilder.Entity<PromotionUser>()
                     .HasOne(pc => pc.promotion)
                     .WithMany(c => c.promotionUsers)
-                    .HasForeignKey(c => c.user_Id);
+                    .HasForeignKey(c => c.promotion_Id);
 
 
 

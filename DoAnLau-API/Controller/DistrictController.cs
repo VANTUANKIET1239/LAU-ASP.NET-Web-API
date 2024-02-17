@@ -34,6 +34,7 @@ namespace DoAnLau_API.Controller
         [HttpGet("GetDistricts/{CityId}")]
         public async Task<IActionResult> GetDistrict_ByCityId(int CityId)
         {
+            
             var result = await _districtRepository.GetDistrict_ByCityId(CityId);
             if (result == null)
             {

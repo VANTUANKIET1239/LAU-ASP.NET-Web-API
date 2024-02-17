@@ -31,6 +31,8 @@ builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<IWardRepository, WardRepository>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<ISYS_INDEX, SysIndexRepository>();
+builder.Services.AddScoped<IBranch, BranchRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 
 // khởi tạo service Indentity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(

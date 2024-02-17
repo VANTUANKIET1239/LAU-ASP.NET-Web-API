@@ -25,6 +25,16 @@ namespace DoAnLau_API.Helper
             CreateMap<Address, AddressDTO>();
             CreateMap<AddressDTO, Address>();
 
+            CreateMap<Reservation, ReservationDTO>()
+                .ForMember(dest => dest.branchId, opt => opt.MapFrom(src => src.branch.branch_Id))
+                .ForMember(dest => dest.branchName, opt => opt.MapFrom(src => src.branch.branchName))
+                .ForMember(dest => dest.customerSizeId, opt => opt.MapFrom(src => src.customerSize.customerSize_Id))
+                .ForMember(dest => dest.customerSize, opt => opt.MapFrom(src => src.customerSize.size))
+                .ForMember(dest => dest.time, opt => opt.MapFrom(src => src.reservationTime.time));
+            CreateMap<ReservationDTO, Reservation>();
+
+            CreateMap<Branch, BranchDTO>();
+            CreateMap<BranchDTO, Branch>();
 
             CreateMap<Promotion, PromotionDTO>();
             CreateMap<PromotionDTO, Promotion>() 

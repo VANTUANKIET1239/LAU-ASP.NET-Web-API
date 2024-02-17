@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DoAnLau_API.Data;
 using DoAnLau_API.Interface;
 using DoAnLau_API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -91,6 +92,27 @@ namespace DoAnLau_API.Controller
                 return StatusCode(500, ModelState);
             }
             return Ok(new { success = true });
+        }
+        [HttpGet("Menu_GetHotDealItems")]
+        public async Task<IActionResult> Menu_GetHotDealItems()
+        {
+            var menus = await _menuResponsitory.Menu_GetHotDealItems();
+            if (menus == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<List<MenuDTO>>(menus));
+        }
+
+        [HttpGet("Menu_GetBestSellerItems")]
+        public async Task<IActionResult> Menu_GetBestSellerItems()
+        {
+            var menus = await _menuResponsitory.Menu_GetBestSellerItems();
+            if (menus == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<List<MenuDTO>>(menus));
         }
     }
 }

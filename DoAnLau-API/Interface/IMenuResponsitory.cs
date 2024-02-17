@@ -1,5 +1,7 @@
-﻿using DoAnLau_API.Models;
+﻿using DoAnLau_API.Data;
+using DoAnLau_API.Models;
 using DoAnLau_API.Pagination;
+using DoAnLau_API.Responsitory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoAnLau_API.Interface
@@ -23,5 +25,9 @@ namespace DoAnLau_API.Interface
 
         public Task<bool> RemoveMenu(string menuId);
 
+        public  Task<ICollection<Menu>> Menu_GetHotDealItems();
+
+        public  Task<ICollection<Menu>> Menu_GetBestSellerItems();
+       
     }
 }

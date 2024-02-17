@@ -17,6 +17,7 @@ namespace DoAnLau_API.Models
        
         public string user_Id { get; set; }
 
+        public int? redeemCount { get; set; }
         public bool state { get; set; }
         public Promotion promotion { get; set; }
 

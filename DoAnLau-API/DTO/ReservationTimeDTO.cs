@@ -9,9 +9,8 @@ namespace DoAnLau_API.Interface
     {
        
         public string reservationTime_Id { get; set; }
-
       
-        public TimeSpan Time { get; set; }
+        public string Time { get; set; }
 
         public bool state { get; set; }
 
